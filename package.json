@@ -1,0 +1,25 @@
+{
+  "name": "ticketbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc && node ./dist/index.js",
+    "start": "tsc && NODE_ENV=production node ./dist/index.js",
+    "format": "npx prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seen-idc/ticketbot.git"
+  },
+  "author": "seen-idc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seen-idc/ticketbot/issues"
+  },
+  "homepage": "https://github.com/seen-idc/ticketbot#readme",
+  "dependencies": {
+    "@types/node": "^14.14.37",
+    "discord.js": "^12.5.2"
+  }
+}
