@@ -1,5 +1,5 @@
-import { TickBotClient } from './client';
-import { getConfig } from '../lib/helpers';
+import { TickBotClient } from './client'
+import { getConfig } from '../lib/helpers'
 
 const client = new TickBotClient()
 

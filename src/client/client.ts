@@ -1,7 +1,6 @@
-import { Client } from "discord.js";
+import { Client } from 'discord.js'
 
 export class TickBotClient extends Client {
-
   constructor() {
     super()
   }
@@ -9,9 +8,7 @@ export class TickBotClient extends Client {
   async loadEvents() {
     this.on('ready', () => console.log('Ready!'))
 
-    this.on('message', message => {
-      
-    })
+    this.on('message', (message) => {})
   }
 
   async init(token: string) {

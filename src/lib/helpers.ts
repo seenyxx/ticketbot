@@ -3,8 +3,7 @@ export function getConfig(): Config {
 
   if (env !== 'production') {
     return JSON.parse(require(`${__dirname}/../../config.json`))
-  }
-  else {
+  } else {
     return JSON.parse(require(`${__dirname}/../../config.dev.json`))
   }
 }
