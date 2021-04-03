@@ -1,6 +1,8 @@
-import { TickBotClient } from './client'
+import { TicketBotClient } from './client'
 import { getConfig } from '../lib/helpers'
 
-const client = new TickBotClient()
+process.on('unhandledRejection', console.error)
 
-client.login(getConfig().token)
+const client = new TicketBotClient()
+
+client.init(getConfig().token)

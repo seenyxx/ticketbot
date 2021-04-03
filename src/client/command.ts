@@ -1,16 +1,23 @@
 import { Message, PermissionResolvable } from 'discord.js'
 
-export function Command(opts: CommandOpts, exec: CommandFunction) {
+export function createCommand(
+  opts: CommandOpts,
+  exec: CommandFunction
+): Command {
   return {
     opts: opts,
     execute: exec,
   }
 }
-
-export type CommandFunction = (message: Message) => Promise<any>
+export interface Command {
+  opts: CommandOpts
+  execute: CommandFunction
+}
+export type CommandFunction = (message: Message, args: string[]) => Promise<any>
 
 export interface CommandOpts {
   triggers: string[]
   cooldown: number
-  userPerms: PermissionResolvable[]
+  userPerms?: PermissionResolvable[]
+  guildOnly?: boolean
 }
