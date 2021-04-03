@@ -13,3 +13,8 @@ export interface Config {
   prefix: string
   database: string
 }
+
+
+export function convertStringToUsable(string: string) {
+  return string.replace(/[^a-zA-Z0-9-_]/g, '');
+}

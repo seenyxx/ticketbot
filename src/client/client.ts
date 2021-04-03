@@ -2,7 +2,7 @@ import { Client } from 'discord.js'
 import { commandMessage } from './handlers/commandMessage'
 import { loadCommands } from './loaders/commandLoader'
 import { handleReaction } from './handlers/reaction'
-import { ticketMessage } from './handlers/ticketMessage';
+import { ticketMessage } from './handlers/ticketMessage'
 
 export class TicketBotClient extends Client {
   constructor() {

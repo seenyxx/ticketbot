@@ -28,18 +28,17 @@ export default createCommand(
     )
 
     const awaitedChannel = await msg.channel.awaitMessages(
-      (m: Message) =>
-        m.author.id === msg.author.id,
+      (m: Message) => m.author.id === msg.author.id,
       {
         time: 10000,
         max: 1,
       }
     )
-    
+
     const channel = awaitedChannel
       .first()
       ?.mentions.channels.first() as TextChannel
-    
+
     if (!channel) return
 
     const embed = new TicketSetup()

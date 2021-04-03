@@ -44,11 +44,14 @@ export class TicketManager {
   }
 
   async getTicketByDM(dmId: string): Promise<ChannelProps | 'none'> {
-    return this.unwrap((await tickets.get(this.select(`dm.${dmId}`)))) || 'none'
+    return this.unwrap(await tickets.get(this.select(`dm.${dmId}`))) || 'none'
   }
 
   async getTicketByChannel(webhookId: string): Promise<DMProps | 'none'> {
-    return this.unwrap((await tickets.get(this.select(`webhook.${webhookId}`)))) || 'none'
+    return (
+      this.unwrap(await tickets.get(this.select(`webhook.${webhookId}`))) ||
+      'none'
+    )
   }
 }
 

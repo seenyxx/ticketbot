@@ -43,4 +43,16 @@ export class Guild {
   removeCategory() {
     guilds.delete(this.select('ticketCategory'))
   }
+
+  async logsWebhook(): Promise<string | 'none'> {
+    return (await guilds.get(this.select('logs'))) || 'none'
+  }
+
+  setLogsWebhook(webhookId: string) {
+    guilds.set(this.select('logs'), webhookId)
+  }
+
+  remLogsWebhook() {
+    guilds.delete(this.select('logs'))
+  }
 }

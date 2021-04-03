@@ -32,7 +32,7 @@ export async function ticketMessage(client: TicketBotClient, msg: Message) {
     const ticket = await ticketDB.getTicketByChannel(webhook.id)
 
     if (ticket === 'none') return
-    
+
     const user = await client.users.fetch(ticket.value, true)
 
     if (!user) {

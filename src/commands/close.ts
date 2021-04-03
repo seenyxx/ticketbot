@@ -4,6 +4,8 @@ import { TicketManager } from '../database/tickets'
 import { ErrorMessage } from '../renderers/error'
 import { TicketClose } from '../renderers/ticketclose'
 import { sleep } from '../client/client'
+import { Guild } from '../database/guild'
+import { LogTicketClose } from '../renderers/closeticketlog'
 
 export default createCommand(
   {
@@ -13,10 +15,13 @@ export default createCommand(
     userPerms: ['MANAGE_CHANNELS'],
   },
   async (msg: Message, args: string[]) => {
-    if (msg.channel.type !== 'text') return
+    if (msg.channel.type !== 'text' || !msg.guild) return
 
-    const ticketDB = new TicketManager(msg.guild?.id)
+    const ticketDB = new TicketManager(msg.guild.id)
+    const guildDB = new Guild(msg.guild.id)
+
     const webhook = (await msg.channel.fetchWebhooks()).first() || null
+    const reason = args[0] || 'No reason provided'
 
     if (!webhook) {
       return msg.channel.send(
@@ -36,22 +41,26 @@ export default createCommand(
       member => member.id === ticket.value
     )
 
-    if (!member) {
-      ticketDB.remTicket(ticket.value, webhook.id)
-      msg.channel.send(new TicketClose(msg.author))
-
-      await sleep(10 * 1000)
-      msg.channel.delete('Ticket closed.')
-    } else {
-      const embed = new TicketClose(msg.author)
-
-      ticketDB.remTicket(ticket.value, webhook.id)
-
-      msg.channel.send(embed)
+    if (member) {
+      const embed = new TicketClose(msg.author, reason)
       member.createDM().then(dm => dm.send(embed))
-
-      await sleep(10 * 1000)
-      msg.channel.delete('Ticket closed.')
     }
+
+    ticketDB.remTicket(ticket.value, webhook.id)
+    msg.channel.send(new TicketClose(msg.author, reason))
+
+    const guildWh = await guildDB.logsWebhook()
+    const actualWh = (await msg.guild.fetchWebhooks()).find(
+      wh => wh.id == guildWh
+    )
+
+    if (actualWh) {
+      const embed = new LogTicketClose(msg.author, reason, msg.channel.name)
+
+      actualWh.send(embed)
+    }
+
+    await sleep(10 * 1000)
+    msg.channel.delete('Ticket closed.')
   }
 )
