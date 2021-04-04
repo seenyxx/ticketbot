@@ -21,5 +21,5 @@ export function convertStringToUsable(string: string) {
 }
 
 export function cleanPings(content: string) {
-  return content.replace(MENTION_REGEX, '<Mention>')
+  return content.replace(MENTION_REGEX, '\`[Deleted Mention]\`')
 }
