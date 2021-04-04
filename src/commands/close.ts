@@ -21,7 +21,7 @@ export default createCommand(
     const guildDB = new Guild(msg.guild.id)
 
     const webhook = (await msg.channel.fetchWebhooks()).first() || null
-    const reason = args[0] || 'No reason provided'
+    const reason = args.join(' ') || 'No reason provided'
 
     if (!webhook) {
       return msg.channel.send(
