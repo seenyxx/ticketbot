@@ -70,6 +70,11 @@ export async function handleReaction(
         }
       )
 
+      channel.createOverwrite(reaction.message.guild.roles.everyone, {
+        SEND_MESSAGES: false,
+        VIEW_CHANNEL: false
+      })
+
       const embed = new TicketStart(`<@${user.id}>`)
 
       const channelEmbedMessage = await channel.send(embed)
