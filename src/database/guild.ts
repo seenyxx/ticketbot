@@ -20,8 +20,8 @@ export class Guild {
     return `${this.id}.${selection}`
   }
 
-  setReactionPrompt(m: Message) {
-    guilds.set(this.select('reaction'), m.id)
+  async setReactionPrompt(m: Message) {
+    await guilds.set(this.select('reaction'), m.id)
   }
 
   async reactionPrompt(): Promise<string | 'none'> {
@@ -32,8 +32,8 @@ export class Guild {
     guilds.delete(this.select('reaction'))
   }
 
-  setCategory(cat: CategoryChannel) {
-    guilds.set(this.select('ticketCategory'), cat.id)
+  async setCategory(cat: CategoryChannel) {
+    await guilds.set(this.select('ticketCategory'), cat.id)
   }
 
   async category(): Promise<string | 'none'> {
@@ -48,8 +48,8 @@ export class Guild {
     return (await guilds.get(this.select('logs'))) || 'none'
   }
 
-  setLogsWebhook(webhookId: string) {
-    guilds.set(this.select('logs'), webhookId)
+  async setLogsWebhook(webhookId: string) {
+    await guilds.set(this.select('logs'), webhookId)
   }
 
   remLogsWebhook() {

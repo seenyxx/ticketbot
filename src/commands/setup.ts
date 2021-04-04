@@ -47,12 +47,12 @@ export default createCommand(
 
     setupMessage.react(TICKET_REACTION)
 
-    guildDB.setReactionPrompt(setupMessage)
+    await guildDB.setReactionPrompt(setupMessage)
 
     const cat = await msg.guild.channels.create(`${TICKET_REACTION} Tickets`, {
       type: 'category',
     })
 
-    guildDB.setCategory(cat)
+    await guildDB.setCategory(cat)
   }
 )

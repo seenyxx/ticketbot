@@ -6,6 +6,7 @@ import { TicketMessage } from '../../renderers/ticketmsg'
 export async function ticketMessage(client: TicketBotClient, msg: Message) {
   if (msg.partial) await msg.fetch()
   if (msg.author.bot) return
+  if (msg.content.startsWith('~')) return
 
   const ticketDB = new TicketManager()
 

@@ -26,7 +26,7 @@ export default createCommand(
       reason: 'Logs for tickets',
     })
 
-    guildDB.setLogsWebhook(wh.id)
+    await guildDB.setLogsWebhook(wh.id)
 
     const embed = new SetLogsChannel(channel)
 
