@@ -23,8 +23,6 @@ export async function handleReaction(
   const ticketPrompt = await guildDB.reactionPrompt()
 
   if (reaction.message.id === ticketPrompt) {
-    reaction.users.remove(user as User)
-
     if (reaction.emoji.name === TICKET_REACTION) {
       const possibleChannel = reaction.message.guild.channels.cache.find(
         (c) => c.type === 'text' && (c as TextChannel).topic === user.id
@@ -119,5 +117,6 @@ export async function handleReaction(
         actualWh.send(embed)
       }
     }
+    reaction.users.remove(user as User)
   }
 }
