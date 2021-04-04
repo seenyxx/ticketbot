@@ -10,7 +10,7 @@ import { LogTicketClose } from '../renderers/closeticketlog'
 export default createCommand(
   {
     triggers: ['close', 'stop'],
-    cooldown: 10,
+    cooldown: 3.5,
     guildOnly: true,
     userPerms: ['MANAGE_CHANNELS'],
   },
