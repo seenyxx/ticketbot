@@ -1,3 +1,4 @@
+import { MENTION_REGEX } from './constants';
 export function getConfig(): Config {
   const env = process.env.NODE_ENV
 
@@ -17,4 +18,8 @@ export interface Config {
 
 export function convertStringToUsable(string: string) {
   return string.replace(/[^a-zA-Z0-9-_]/g, '');
+}
+
+export function cleanPings(content: string) {
+  return content.replace(MENTION_REGEX, '<Mention>')
 }

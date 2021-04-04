@@ -2,6 +2,7 @@ import { Message, Webhook, WebhookClient } from 'discord.js'
 import { TicketManager } from '../../database/tickets'
 import { TicketBotClient } from '../client'
 import { TicketMessage } from '../../renderers/ticketmsg'
+import { cleanPings } from '../../lib/helpers';
 
 export async function ticketMessage(client: TicketBotClient, msg: Message) {
   if (msg.partial) await msg.fetch()
@@ -24,7 +25,7 @@ export async function ticketMessage(client: TicketBotClient, msg: Message) {
       return ticketDB.remTicket(msg.author.id, ticket.value)
     }
 
-    webhook.send(msg.content)
+    webhook.send(cleanPings(msg.content))
   } else if (msg.channel.type === 'text') {
     const webhook = (await msg.channel.fetchWebhooks()).first()
 
@@ -40,7 +41,7 @@ export async function ticketMessage(client: TicketBotClient, msg: Message) {
       return ticketDB.remTicket(ticket.value, msg.channel.id)
     }
 
-    const embed = new TicketMessage(msg.author, msg.content)
+    const embed = new TicketMessage(msg.author, cleanPings(msg.content))
 
     user.send(embed)
   }
