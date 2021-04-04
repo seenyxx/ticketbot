@@ -23,6 +23,7 @@ export async function handleReaction(
   const ticketPrompt = await guildDB.reactionPrompt()
 
   if (reaction.message.id === ticketPrompt) {
+    reaction.users.remove(user as User)
     if (reaction.emoji.name === TICKET_REACTION) {
       const possibleChannel = reaction.message.guild.channels.cache.find(
         (c) => c.type === 'text' && (c as TextChannel).topic === user.id
@@ -38,7 +39,20 @@ export async function handleReaction(
         return
       }
 
-      const dm = await user.createDM()
+      const dm = await user.createDM().catch(e => {
+        reaction.message.channel
+        .send(`<@${user.id}> I cannot send you a DM!`)
+        .then(m => m.delete({ timeout: 5000 }))
+      })
+
+      if (!dm) return
+      if (dm.recipient.flags?.bitfield == 0) {
+        reaction.message.channel
+        .send(`<@${user.id}> I cannot send you a DM!`)
+        .then(m => m.delete({ timeout: 5000 }))
+        return
+      }
+
       const catId = await guildDB.category()
 
       if ((await ticketDB.getTicketByDM(dm.id)) !== 'none') {
@@ -81,11 +95,13 @@ export async function handleReaction(
         `*${reaction.message.guild.name}*\n[\`[URL]\`](${channelEmbedMessage.url})`
       )
 
-      dm.send(dmEmbed).catch(e => {
+      const dmMsg = dm.send(dmEmbed).catch(e => {
         reaction.message.channel
           .send(`<@${user.id}> I cannot send you a DM!`)
-          .then(m => m.delete({ timeout: 3000 }))
+          .then(m => m.delete({ timeout: 5000 }))
       })
+
+      if (!dmMsg) return
 
       const ticketManagerRole = reaction.message.guild.roles.cache.find(r =>
         r.name.toLowerCase().includes(TICKET_MANAGER_ROLE)
@@ -117,6 +133,5 @@ export async function handleReaction(
         actualWh.send(embed)
       }
     }
-    reaction.users.remove(user as User)
   }
 }
