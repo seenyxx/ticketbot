@@ -5,7 +5,7 @@ import { SetLogsChannel } from '../renderers/setlogschannel'
 
 export default createCommand(
   {
-    triggers: ['logs', 'setlogs', 'set-log', 'setlog'],
+    triggers: ['set-logs', 'logs', 'setlogs', 'set-log', 'setlog'],
     cooldown: 10,
     guildOnly: true,
     userPerms: ['MANAGE_CHANNELS'],
