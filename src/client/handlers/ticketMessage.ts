@@ -41,7 +41,7 @@ export async function ticketMessage(client: TicketBotClient, msg: Message) {
       return ticketDB.remTicket(ticket.value, msg.channel.id)
     }
 
-    const embed = new TicketMessage(msg.author, cleanPings(msg.content))
+    const embed = new TicketMessage(cleanPings(msg.content))
 
     user.send(embed)
   }

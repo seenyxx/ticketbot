@@ -89,11 +89,9 @@ export async function handleReaction(
 
       const embed = new TicketStart(`<@${user.id}>`)
 
-      const channelEmbedMessage = await channel.send(embed)
+      await channel.send(embed)
 
-      const dmEmbed = new TicketStart(
-        `*${reaction.message.guild.name}*\n[\`[URL]\`](${channelEmbedMessage.url})`
-      )
+      const dmEmbed = new TicketStart()
 
       const dmMsg = dm.send(dmEmbed).catch(e => {
         reaction.message.channel

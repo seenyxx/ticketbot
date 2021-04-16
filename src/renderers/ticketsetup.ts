@@ -9,6 +9,5 @@ export class TicketSetup extends MessageEmbed {
     this.setDescription(
       `React with \`${TICKET_REACTION}\` to create a new ticket!`
     )
-    this.setFooter(`🧿`)
   }
 }

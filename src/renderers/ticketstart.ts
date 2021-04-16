@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js'
 
 export class TicketStart extends MessageEmbed {
-  constructor(msg: string) {
+  constructor(msg?: string) {
     super()
     this.setColor('GREYPLE')
     this.setTitle('New Ticket')
